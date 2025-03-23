@@ -1,0 +1,106 @@
+@use '../../../assets/styles/variables.scss' as *;
+
+:host{
+    height: 100svh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin: auto;
+}
+
+.card{
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    height: max-content;
+    background-color: #fff;
+    max-width: 20rem;
+}
+
+@media (min-width: 400px) {
+    .card {
+        width: 22rem;
+    }
+}
+
+.card-body{
+    padding: 24px;
+}
+
+.mainHeader{
+    font-size: 30px;
+	text-align: center;
+	font-weight: bold;
+    margin: 0 0 24px 0;
+}
+
+.header{
+	font-size: 18px;
+	text-align: center;
+	font-weight: bold;
+    margin: 0 0 24px 0;
+}
+
+.formContainer{
+
+    div{
+        margin-bottom: 10px;
+    }
+
+    input{
+    font-size: 12px;
+    height: 30px;
+    border: 1px solid #aaa;
+    border-radius: 4px;
+    width: calc(100% - 10px);
+    padding: 4px;
+    }
+
+    input:focus-visible {
+        outline: 0.5px solid #aaa;
+    }
+}
+
+.changeUser{
+    font-size: 12px;
+    text-align: center;
+
+    span:nth-child(2){
+        text-decoration: underline;
+        cursor: pointer;
+    }
+}
+
+.passDiv{
+    position: relative;
+
+    i{
+    position: absolute;
+    right: 10px;
+    top: 14px;
+    font-size: 12px;
+    cursor: pointer;
+    }
+}
+
+.login, .signup{
+    opacity: 0;
+    visibility: hidden; 
+    animation: makeVisible 2s forwards;
+}
+
+@keyframes makeVisible {
+    0% {
+        opacity: 0;
+        visibility: hidden;
+        transform: translateY(-20px);
+    }
+    50% {
+        opacity: 0.5;
+        visibility: visible;
+        transform: translateY(0);
+    }
+    100% {
+        opacity: 1;
+        visibility: visible;
+    }
+}

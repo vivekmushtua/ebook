@@ -1,0 +1,16 @@
+<span class="custom-snackbar" [ngClass]="{'custom-snackbar-success': data.success == true, 'custom-snackbar-failure': data.success == false }" matSnackBarLabel>
+    
+    @if(data.success == true){
+        <span class="spanImgSuccess"
+        (click)="closeSnackbar()"><i class="fas fa-check"></i></span>
+    }
+    @else{
+        <span class="spanImgFailure"
+        (click)="closeSnackbar()">
+         <span>x</span>
+        </span> 
+    }
+     
+   
+     {{ data.message }}
+   </span>
