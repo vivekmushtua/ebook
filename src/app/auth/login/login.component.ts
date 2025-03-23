@@ -7,6 +7,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { SnackbarComponent } from '../../../shared/shared/snackbar/snackbar.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { JwtService } from '../../jwt.service';
 
 @Component({
   selector: 'app-login',
@@ -25,6 +26,7 @@ export class LoginComponent implements OnInit {
   constructor(
     private formBuild: FormBuilder,
     private _snackBar: MatSnackBar,
+    private jwtService: JwtService
   ){}
 
   ngOnInit() {
@@ -59,16 +61,23 @@ export class LoginComponent implements OnInit {
 
   login(){
     let request = this.loginForm.value
-    let exist = this.userList().find(item => item.email == request.email && item.password == request.password)
+    const exist = this.userList().find(item => item.email == request.email && item.password == request.password)
     if(exist){
-      this._snackBar.openFromComponent(SnackbarComponent, {
-        duration:3000,
-        data: { message: 'Logged in Successfully', success: true },
-        horizontalPosition: 'right',
-        verticalPosition: 'top',
-        panelClass: ['custom-snackbar-success']
-      });
+      this.jwtService.createJwt(request).subscribe((res) => {
+const token = res['token']
+if(token){
+  localStorage.setItem('token', JSON.stringify(token))
+  this._snackBar.openFromComponent(SnackbarComponent, {
+    duration:3000,
+    data: { message: 'Logged in Successfully', success: true },
+    horizontalPosition: 'right',
+    verticalPosition: 'top',
+    panelClass: ['custom-snackbar-success']
+  });
+}
+      })
     }
+
     else{
       this._snackBar.openFromComponent(SnackbarComponent, {
         duration:3000,
@@ -82,7 +91,28 @@ export class LoginComponent implements OnInit {
 
   signup(){
     let request = this.signupForm.value
+    const exist = this.userList().find(item => item.email == request.email)
+    if(exist){
+       this._snackBar.openFromComponent(SnackbarComponent, {
+        duration:3000,
+        data: { message: `User Already Exist`, success: false },
+        horizontalPosition: 'right',
+        verticalPosition: 'top',
+        panelClass: ['custom-snackbar-failure']
+      });
+      return
+    }
+    else{
     this.userList.update((oldData = []) => [...oldData, request]);
     localStorage.setItem('users', JSON.stringify(this.userList()))
+    this._snackBar.openFromComponent(SnackbarComponent, {
+      duration:3000,
+      data: { message: 'User Created Successfully', success: true },
+      horizontalPosition: 'right',
+      verticalPosition: 'top',
+      panelClass: ['custom-snackbar-success']
+    });
+    this.changeUser()
+  }
   }
 }
