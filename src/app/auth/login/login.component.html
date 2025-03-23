@@ -1,0 +1,124 @@
+<p class="mainHeader">Welcome to Ebook Station</p>
+<div class="card">
+    <div class="card-body">
+      
+      @if(oldUser()){
+        <div class="login">
+          <p class="header">Log In to eBook</p>
+          <form [formGroup]="loginForm" class="formContainer">
+            <div>
+              <input
+                type="text"
+                formControlName='email'
+                id="email"
+                class=""
+                placeholder="Enter Email"
+              />
+
+              @if(loginForm.controls['email'].invalid && (loginForm.controls['email'].dirty || loginForm.controls['email'].touched) && loginForm.controls['email'].errors['required']){
+                <div class="errorinput">
+                    *Email is required                  
+              </div>
+              }
+        </div>
+        <div class="passDiv">
+            <input
+              [type]="hide() ? 'password' : 'text'"
+              formControlName='password'
+              id="password"
+              class=""
+              placeholder="Enter Password"
+            />
+            @if(hide()){
+              <i (click)="showHidePass()" class="fas fa-eye-slash"></i>
+            }
+            @else{
+              <i (click)="showHidePass()" class="fas fa-eye"></i>
+            }
+            
+            @if(loginForm.controls['password'].invalid && (loginForm.controls['password'].dirty || loginForm.controls['password'].touched) && loginForm.controls['password'].errors['required']){
+              <div class="errorinput">
+                  *Password is required                  
+            </div>
+            }
+          
+      </div>
+
+      <button class="formButton" (click)="login()" [disabled]="loginForm.invalid">Log In</button>
+          </form>
+          <div class="changeUser">
+            <span>Don't have an account?</span>
+            <span (click)="changeUser()">Sign up</span>
+          </div>
+      </div>
+      }
+
+      @else{
+        <div class="signup">
+          <p class="header">Create a new account</p>
+          <form [formGroup]="signupForm" class="formContainer">
+            <div>
+              <input
+                type="text"
+                formControlName='userName'
+                id="name"
+                class=""
+                placeholder="Enter Name"
+              />
+
+              @if(signupForm.controls['userName'].invalid && (signupForm.controls['userName'].dirty || signupForm.controls['userName'].touched) && signupForm.controls['userName'].errors['required']){
+                <div class="errorinput">
+                    *Email is required                  
+              </div>
+              }
+        </div>
+            <div>
+              <input
+                type="text"
+                formControlName='email'
+                id="email"
+                class=""
+                placeholder="Enter Email"
+              />
+
+              @if(signupForm.controls['email'].invalid && (signupForm.controls['email'].dirty || signupForm.controls['email'].touched) && signupForm.controls['email'].errors['required']){
+                <div class="errorinput">
+                    *Email is required                  
+              </div>
+              }
+        </div>
+        <div class="passDiv">
+            <input
+              [type]="hide() ? 'password' : 'text'"
+              formControlName='password'
+              id="password"
+              class=""
+              placeholder="Enter Password"
+            />
+            @if(hide()){
+              <i (click)="showHidePass()" class="fas fa-eye-slash"></i>
+            }
+            @else{
+              <i (click)="showHidePass()" class="fas fa-eye"></i>
+            }
+
+
+            @if(signupForm.controls['password'].invalid && (signupForm.controls['password'].dirty || signupForm.controls['password'].touched) && (signupForm.controls['password'].errors['required'] || loginForm.controls['password'].errors['email'])){
+              <div class="errorinput">
+                  *Password is required                  
+            </div>
+            }
+          
+      </div>
+          </form>
+          <button class="formButton" (click)="signup()" [disabled]="signupForm.invalid">Sign Up</button>
+
+          <div class="changeUser">
+            <span>Already have an account?</span>
+            <span (click)="changeUser()">Login</span>
+          </div>
+      </div>
+      }
+        
+    </div>
+</div>
